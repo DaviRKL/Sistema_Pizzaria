@@ -48,19 +48,27 @@ public class SistemaPedidos {
     }
 
     public void incluirPedidosEntrega() {
-        int tamanhoFila = pilhaEntregas.tamanho();
-        for (int i = 0; i < tamanhoFila; i++) {
-            Pedido pedido = (Pedido) pilhaEntregas.desempilhar();
-            pilhaEntregas.empilhar(pedido); 
-        }
-
-
-        for (int i = 0; i < 3; i++) {
-            Pedido pedido = filaPedidos.desenfileirar();
-            if (pedido != null) {
-                pilhaEntregas.empilhar(pedido);
+            int tamanhoFila = pilhaEntregas.tamanho();
+            for (int i = 0; i < tamanhoFila; i++) {
+                Pedido pedido = (Pedido) pilhaEntregas.desempilhar();
+                pilhaEntregas.empilhar(pedido); 
             }
-        }
+            Integer maiorDistancia =  Integer.MAX_VALUE;
+            
+            for (int i = 0; i < 3; i++) {
+                Pedido pedido = filaPedidos.desenfileirar();
+                if (pedido != null) {
+                    
+                        pilhaEntregas.empilhar(pedido);
+                    
+                   
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Erro: Não há pedidos!");
+                    break;
+                }
+                JOptionPane.showMessageDialog(null, "Pedidos incluidos com sucesso!");
+            }
     }
 
     public void gerarRelatorioEntrega() {

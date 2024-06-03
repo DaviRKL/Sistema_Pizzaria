@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 public class Pilha {
@@ -72,7 +74,19 @@ public class Pilha {
         }
     }
 
-        public String exibirSabores() {
+        public ArrayList<String> exibirSabores() {
+            ArrayList <String> cardapio = new ArrayList<>();
+            if (!vazia()) {
+                for (int i = topo; i >= 0; i--) {
+                    String sabor = vetor[i].toString();
+                    cardapio.add(sabor);
+                }
+                
+            }
+            return cardapio;
+        }
+
+        public String exibirListaSabores() {
             StringBuilder cardapio = new StringBuilder("Lista de sabores 🍕:\n");
             if (vazia()) {
                 return "Sem sabores!";
@@ -82,7 +96,7 @@ public class Pilha {
                 }
                 return cardapio.toString();
             }
-    }
+        }
 
     public int tamanho() {
         return total;

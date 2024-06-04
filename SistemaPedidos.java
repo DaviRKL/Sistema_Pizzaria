@@ -48,28 +48,44 @@ public class SistemaPedidos {
     }
 
     public void incluirPedidosEntrega() {
-            int tamanhoFila = pilhaEntregas.tamanho();
-            for (int i = 0; i < tamanhoFila; i++) {
-                Pedido pedido = (Pedido) pilhaEntregas.desempilhar();
-                pilhaEntregas.empilhar(pedido); 
+        Pedido[] pedidos = new Pedido[3];
+        double[] distancias = new double[3];
+        int pedidosCount = 0;
+
+        for (int i = 0; i < 3; i++) {
+            Pedido pedido = filaPedidos.desenfileirar();
+
+            if (pedido != null) {
+                pedidos[i] = pedido;
+                distancias[i] = pedido.getDistancia();
+                pedidosCount++;
+                // pilhaEntregas.empilhar(pedido);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro: Não há pedidos!");
+                break;
             }
-            Integer maiorDistancia =  Integer.MAX_VALUE;
-            
-            for (int i = 0; i < 3; i++) {
-                Pedido pedido = filaPedidos.desenfileirar();
-                if (pedido != null) {
-                    
-                        pilhaEntregas.empilhar(pedido);
-                    
-                   
+        }
+        for (int i = 0; i < pedidosCount - 1; i++) {
+            for (int j = i + 1; j < pedidosCount; j++) {
+                if (distancias[i] < distancias[j]) {
+                    double tempDistancia = distancias[i];
+                    distancias[i] = distancias[j];
+                    distancias[j] = tempDistancia;
+
+                    Pedido temPedido = pedidos[i];
+                    pedidos[i] = pedidos[j];
+                    pedidos[j] = temPedido;
                 }
-                else{
-                    JOptionPane.showMessageDialog(null, "Erro: Não há pedidos!");
-                    break;
-                }
-                JOptionPane.showMessageDialog(null, "Pedidos incluidos com sucesso!");
+
             }
+        }
+        for(int i =0; i<pedidosCount; i++){
+            pilhaEntregas.empilhar(pedidos[i]);
+        }
+        JOptionPane.showMessageDialog(null, "Pedidos incluidos com sucesso!");
     }
+
+
 
     public void gerarRelatorioEntrega() {
         StringBuilder relatorio = new StringBuilder("Pedidos para entrega:\n");
